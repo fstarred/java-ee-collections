@@ -95,3 +95,13 @@ OR
 | V | F | V |
 | F | V | V |
 | F | F | F |
+
+
+### Analytics
+
+This is an interception binding to a method interceptor that measure the execution time process.
+Available parameters are:
+
+* limit: tasks that exceeds this value with print a warn instead of a info. Values are expressed in milliseconds.
+* payload -> print a custom message. Default is the input method
+* showArgs -> print method arguments value.

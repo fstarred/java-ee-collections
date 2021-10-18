@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 @Analytics(payload = "my service")
 @ApplicationScoped
@@ -21,7 +19,7 @@ public class MyService {
     @Interceptors(ServiceInterceptor.class)
     public void sleep(int time) {
         try {
-            Executors.newSingleThreadScheduledExecutor().awaitTermination(time, TimeUnit.SECONDS);
+            Thread.sleep(time * 1000L);
         } catch (InterruptedException e) {
             logger.error(e.getMessage());
             Thread.currentThread().interrupt();

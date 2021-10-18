@@ -56,3 +56,42 @@ If you want to learn more about building native executables, please consult http
 Easily start your RESTful Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+
+## Custom class collections
+
+### QueryParamValidator
+
+This annotation manage query params policy, which is checked by **ParamRequestFilter** provider class.
+There are 2 types of validations:
+
+1. XorGroupParam
+2. AnyGroupParam
+
+#### XorGroupParam
+
+Each group of query param annotated with XorGroupParam got a check with the XOR operator criteria.
+Thus, there must be one and only one parameter valorized for one group.
+
+XOR
+
+| A | B | R |
+|---|---|---|
+| V | V | F |
+| V | F | V |
+| F | V | V |
+| F | F | F |
+
+#### AnyGroupParam
+
+Each group of query param annotated with AnyGroupParam got a check with the OR operator criteria.
+Thus, there must be at least one parameter valorized for one group.
+
+
+OR
+
+| A | B | R |
+|---|---|---|
+| V | V | V |
+| V | F | V |
+| F | V | V |
+| F | F | F |

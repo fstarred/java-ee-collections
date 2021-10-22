@@ -8,6 +8,7 @@ import it.fstarred.simplerest.provider.PersonDB;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
+import javax.json.JsonArray;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import javax.ws.rs.*;
@@ -23,12 +24,41 @@ public class PersonResource {
     @Inject
     Logger logger;
 
+    @Inject
+    PersonDB personDB;
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public Person create(@PathParam("id") int id) {
+        return personDB.get(id);
+    }
+
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Person create(@Valid Person input) {
-        PersonDB.add(input);
+        personDB.add(input);
         return input;
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void delete(@PathParam("id") int id) {
+        personDB.delete(id);
+    }
+
+    /**
+     * see https://tools.ietf.org/html/rfc6902 for further explanations
+     */
+    @PATCH
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public void modify(@PathParam("id") int id,
+                       JsonArray input) {
+        personDB.update(id, input);
     }
 
     @QueryParamValidator
@@ -49,7 +79,6 @@ public class PersonResource {
                 Optional.ofNullable(city).orElse(country),
                 gender);
     }
-
 
     @QueryParamValidator
     @GET

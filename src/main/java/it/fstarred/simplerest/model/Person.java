@@ -1,10 +1,13 @@
 package it.fstarred.simplerest.model;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class Person {
 
+
+    private Integer id;
     @NotEmpty
     @Size(min = 2)
     private String name;
@@ -23,6 +26,18 @@ public class Person {
     @NotEmpty
     @Pattern(regexp = "\\b[MF]\\b")
     private String gender;
+
+    public Integer getId() {
+        return id;
+    }
+
+    @JsonbTransient
+    public void setId(final Integer id) {
+        if (this.id != null) {
+            throw new UnsupportedOperationException("cannot initialize id more that one time");
+        }
+        this.id = id;
+    }
 
     public String getName() {
         return name;
